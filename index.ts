@@ -4,7 +4,12 @@ import { execSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 import { google } from "@ai-sdk/google";
+import { buildSystemPrompt } from "./system";
 
+type ApprovalConfig =
+  | { mode: "interactive" }
+  | { mode: "background" }
+  | { mode: "delegated"; trust: string[] };
 interface BashOperations {
   exec(command: string): Promise<{ stdout: string; exitCode: number }>;
 }
@@ -24,12 +29,21 @@ const SAFE_PREFIXES = [
   "git diff",
 ];
 
+function createApproval(config: ApprovalConfig) {
+    return ({ command }: { command: string }) => {
+      if (config.mode === "background") return false;
+   
+      if (config.mode === "delegated") {
+        return !config.trust.some((p) => command.trim().startsWith(p));
+      }
+   
+      return !SAFE_PREFIXES.some((p) => command.trim().startsWith(p));
+    };
+  }
+
 const cwd = resolve(process.argv[2] || process.cwd());
 
-function createBashTool(operations: BashOperations, safePrefixes: string[]) {
-  function isSafe(command: string): boolean {
-    return safePrefixes.some((prefix) => command.trim().startsWith(prefix));
-  }
+function createBashTool(operations: BashOperations,needsApproval: (input: { command: string }) => boolean,) {
 
   return tool({
     description: `Execute a shell command in the working directory.
@@ -53,9 +67,10 @@ EXAMPLES:
       command: z.string().describe("Shell command to execute"),
     }),
     execute: async ({ command }) => {
-      if (!isSafe(command)) {
-        return `Blocked: "${command}" requires approval. Only safe commands (${safePrefixes.join(", ")}) run automatically.`;
-      }
+        if (needsApproval({ command })) {
+            return `Blocked: "${command}" requires approval.`;
+          }
+
       const { stdout } = await operations.exec(command);
       return stdout || "(no output)";
     },
@@ -80,9 +95,17 @@ const localOps: BashOperations = {
     }
   },
 };
-
-const bash = createBashTool(localOps, SAFE_PREFIXES);
-
+// // Interactive: human approves anything not on the safe list
+// const bash = createBashTool(localOps, createApproval({ mode: "interactive" }));
+ 
+// // Background: auto-approve everything (CI, automation)
+// const bash = createBashTool(localOps, createApproval({ mode: "background" }));
+ 
+// Delegated: subagent inherits a trust slice from its parent
+const bash = createBashTool(
+  localOps,
+  createApproval({ mode: "delegated", trust: ["pwd", "find .", "git status"] }),
+);
 const read = tool({
   description: `Read a file from the project. Returns numbered lines.
 
@@ -184,9 +207,15 @@ EXAMPLES:
   },
 });
 
+const instructions = buildSystemPrompt({
+    workingDirectory: cwd,
+    sandboxType: "local",
+    toolNames: Object.keys({ read, grep, bash }),
+  });
+
 const agent = new ToolLoopAgent({
   model: google("gemini-3.5-flash-lite"),
-  instructions: `You are a coding agent.\nWorking directory: ${cwd}`,
+  instructions:  instructions,
   tools: { bash, read, grep },
   stopWhen: stepCountIs(10),
 });
