@@ -1,17 +1,38 @@
 import { ToolLoopAgent, stepCountIs, tool } from "ai";
 import { z } from "zod";
+import { execSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 import { google } from "@ai-sdk/google";
-import { execSync } from "node:child_process";
 
-const SAFE_PREFIXES =['ls',"cat" , "echo" , "pwd" ,'which', 'find',   "head", "tail", "wc", "git log", "git status", "git diff",]
-function isSafe(command: string): boolean {
-    return SAFE_PREFIXES.some((p) => command.trim().startsWith(p));
+interface BashOperations {
+  exec(command: string): Promise<{ stdout: string; exitCode: number }>;
+}
+
+const SAFE_PREFIXES = [
+  "ls",
+  "cat",
+  "echo",
+  "pwd",
+  "which",
+  "find",
+  "head",
+  "tail",
+  "wc",
+  "git log",
+  "git status",
+  "git diff",
+];
+
+const cwd = resolve(process.argv[2] || process.cwd());
+
+function createBashTool(operations: BashOperations, safePrefixes: string[]) {
+  function isSafe(command: string): boolean {
+    return safePrefixes.some((prefix) => command.trim().startsWith(prefix));
   }
 
-const bash = tool({
-  description: `Execute a shell command in the working directory.
+  return tool({
+    description: `Execute a shell command in the working directory.
 
 WHEN TO USE: running build commands, installing packages, running tests,
   git operations, directory listings.
@@ -25,7 +46,7 @@ USAGE: command is a single shell string. Commands not in the safe-prefix
   allowlist are blocked and return a clear error message.
 
 EXAMPLES:
-  - List files: command "ls -la"
+  - List files: command "ls"
   - Check git status: command "git status"
   - Run a test suite: command "npm test"`,
     inputSchema: z.object({
@@ -33,37 +54,49 @@ EXAMPLES:
     }),
     execute: async ({ command }) => {
       if (!isSafe(command)) {
-        return `Blocked: "${command}" requires approval. Only safe commands (${SAFE_PREFIXES.join(", ")}) run automatically.`;
+        return `Blocked: "${command}" requires approval. Only safe commands (${safePrefixes.join(", ")}) run automatically.`;
       }
-      try {
-        const stdout = execSync(command, {
-          cwd,
-          encoding: "utf-8",
-          timeout: 30_000,
-          shell: "powershell.exe",
-        });
-        return stdout || "(no output)";
-      } catch (e: any) {
-        return `Exit ${e.status ?? 1}: ${e.stdout || e.stderr || e.message || ""}`;
-      }
+      const { stdout } = await operations.exec(command);
+      return stdout || "(no output)";
     },
   });
-const cwd = resolve(process.argv[2] || process.cwd());
- 
+}
+
+const localOps: BashOperations = {
+  exec: async (command) => {
+    try {
+      const stdout = execSync(command, {
+        cwd,
+        encoding: "utf-8",
+        timeout: 30_000,
+        shell: "powershell.exe",
+      });
+      return { stdout, exitCode: 0 };
+    } catch (error: any) {
+      return {
+        stdout: error.stdout || error.stderr || error.message || "",
+        exitCode: error.status ?? 1,
+      };
+    }
+  },
+};
+
+const bash = createBashTool(localOps, SAFE_PREFIXES);
+
 const read = tool({
-  description:  `Read a file from the project. Returns numbered lines.
- 
-  WHEN TO USE: viewing file contents, checking configurations, reading source code,
-    examining specific lines with offset/limit.
-   
-  WHEN NOT TO USE: searching for patterns across files (use grep instead).
-    Running commands (use bash instead).
-   
-  DO NOT USE FOR: searching code (use grep), executing commands (use bash),
-    modifying files (use edit or write).
-   
-  USAGE: path is relative to working directory. offset and limit are optional.
-    Output is capped at 500 lines.`,
+  description: `Read a file from the project. Returns numbered lines.
+
+WHEN TO USE: viewing file contents, checking configurations, reading source code,
+  examining specific lines with offset/limit.
+
+WHEN NOT TO USE: searching for patterns across files (use grep instead).
+  Running commands (use bash instead).
+
+DO NOT USE FOR: searching code (use grep), executing commands (use bash),
+  modifying files (use edit or write).
+
+USAGE: path is relative to working directory. offset and limit are optional.
+  Output is capped at 500 lines.`,
   inputSchema: z.object({
     path: z.string().describe("File path relative to working directory"),
     offset: z.number().optional().describe("Start line (1-indexed)"),
@@ -73,36 +106,36 @@ const read = tool({
     const abs = resolve(cwd, filePath);
     const content = readFileSync(abs, "utf-8");
     let lines = content.split("\n");
- 
+
     if (offset) lines = lines.slice(offset - 1);
     if (limit) lines = lines.slice(0, limit);
- 
+
     const MAX_LINES = 500;
     const truncated = lines.length > MAX_LINES;
     if (truncated) lines = lines.slice(0, MAX_LINES);
- 
-    const numbered = lines.map((l, i) => `${(offset || 1) + i}: ${l}`);
+
+    const numbered = lines.map((line, index) => `${(offset || 1) + index}: ${line}`);
     return truncated
       ? numbered.join("\n") + `\n... (truncated at ${MAX_LINES} lines)`
       : numbered.join("\n");
   },
 });
- 
+
 const grep = tool({
-  description:`Search file contents using regex. Returns matching lines with file paths.
- 
+  description: `Search file contents using regex. Returns matching lines with file paths.
+
 WHEN TO USE: finding patterns across multiple files, locating function definitions,
   searching for imports, finding TODOs or error messages.
- 
+
 WHEN NOT TO USE: reading a known file (use read instead).
   Running commands (use bash instead).
- 
+
 DO NOT USE FOR: reading files (use read), listing directories (use bash),
   modifying files (use edit).
- 
+
 USAGE: pattern is a regex string. glob filters by file extension.
   Results are capped at 50 matches.
- 
+
 EXAMPLES:
   - Find all TODO comments: pattern "TODO" glob "*.ts"
   - Find function definitions: pattern "function \\w+" glob "*.ts"
@@ -125,6 +158,7 @@ EXAMPLES:
           walk(full);
           continue;
         }
+
         const glob = globFilter || "*";
         const nameOk =
           glob === "*" || (glob.startsWith("*.") && entry.name.endsWith(glob.slice(1)));
@@ -132,8 +166,8 @@ EXAMPLES:
 
         readFileSync(full, "utf-8")
           .split("\n")
-          .forEach((line, i) => {
-            if (regex.test(line)) matches.push(`${relative(cwd, full)}:${i + 1}:${line}`);
+          .forEach((line, index) => {
+            if (regex.test(line)) matches.push(`${relative(cwd, full)}:${index + 1}:${line}`);
             regex.lastIndex = 0;
           });
       }
@@ -149,15 +183,14 @@ EXAMPLES:
       : shown.join("\n");
   },
 });
- 
+
 const agent = new ToolLoopAgent({
-//   model: "anthropic/claude-haiku-4-5",
-model: google("gemini-3.5-flash-lite"),
+  model: google("gemini-3.5-flash-lite"),
   instructions: `You are a coding agent.\nWorking directory: ${cwd}`,
-  tools: { bash ,read, grep },
+  tools: { bash, read, grep },
   stopWhen: stepCountIs(10),
 });
- 
+
 const prompt = process.argv.slice(3).join(" ") || "Hello!";
 const { text, steps } = await agent.generate({ prompt });
 console.log(text);
