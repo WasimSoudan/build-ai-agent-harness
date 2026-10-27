@@ -1,6 +1,6 @@
 import dotenvFlow from "dotenv-flow";
 dotenvFlow.config();
-import { ToolLoopAgent, stepCountIs } from "ai";
+import { ToolLoopAgent, stepCountIs,tool, pruneMessages } from "ai";
 import { execSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -80,8 +80,16 @@ const agent = new ToolLoopAgent({
   stopWhen: stepCountIs(10),
   onStepEnd:({usage ,stepNumber})=>{
     console.error(`Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output`);
-    
-  }
+  },
+  prepareCall: async (options) => ({
+    ...options,
+    messages: options.messages
+      ? pruneMessages({
+          messages: options.messages,
+          toolCalls: "before-last-3-messages",
+        })
+      : undefined,
+  })
 });
 
 const prompt = process.argv.slice(3).join(" ") || "Hello!";
