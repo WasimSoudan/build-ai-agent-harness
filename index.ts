@@ -1,3 +1,5 @@
+import dotenvFlow from "dotenv-flow";
+dotenvFlow.config();
 import { ToolLoopAgent, stepCountIs, tool } from "ai";
 import { z } from "zod";
 import { execSync } from "node:child_process";

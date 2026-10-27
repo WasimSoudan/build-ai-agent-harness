@@ -13,6 +13,8 @@
   "dependencies": {
     "@ai-sdk/google": "^4.0.105",
     "ai": "^7.0.153",
+    "dotenv-flow": "^4.1.0",
+    "express": "^5.3.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {
