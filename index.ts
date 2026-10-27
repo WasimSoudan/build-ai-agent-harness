@@ -7,7 +7,7 @@ import { resolve } from "node:path";
 import { google } from "@ai-sdk/google";
 import { buildSystemPrompt } from "./system";
 import { join } from "node:path";
-import type { Sandbox } from "./src/sandbox";
+import type { SandboxLifecycle } from "./src/sandbox";
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
 import { createBashTool, createGrepTool, createReadTool } from "./src/tools";
@@ -55,6 +55,12 @@ const sandbox =
 // const sandbox = createLocalSandbox(cwd);
 console.error(`Sandbox ${sandbox.type} created in ${sandbox.workingDirectory}`);
 
+const lifecycle: SandboxLifecycle = {
+  afterStart: async (sb) => console.error(`[lifecycle] after start: ${sb.type}`),
+  beforeStop: async (sb) => console.error(`[lifecycle] before stop: ${sb.type}`),
+};
+await lifecycle.afterStart?.(sandbox);
+
 const tools={
     bash: createBashTool(sandbox, approval),
     read: createReadTool(sandbox),
@@ -75,6 +81,11 @@ const agent = new ToolLoopAgent({
 });
 
 const prompt = process.argv.slice(3).join(" ") || "Hello!";
-const { text, steps } = await agent.generate({ prompt });
-console.log(text);
-console.log(`\n(${steps.length} steps)`);
+try {
+  const { text, steps } = await agent.generate({ prompt });
+  console.log(text);
+  console.log(`\n(${steps.length} steps)`);
+} finally {
+  await lifecycle.beforeStop?.(sandbox);
+  await sandbox.stop();
+}
