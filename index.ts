@@ -9,6 +9,7 @@ import { buildSystemPrompt } from "./system";
 import { join } from "node:path";
 import type { Sandbox } from "./src/sandbox";
 import { createLocalSandbox } from "./src/sandbox-local";
+import { createJustBashSandbox } from "./src/sandbox-just-bash";
 import { createBashTool, createGrepTool, createReadTool } from "./src/tools";
 type ApprovalConfig =
   | { mode: "interactive" }
@@ -46,7 +47,12 @@ const agentsPath = join(cwd, "AGENTS.md");
 const projectContext = existsSync(agentsPath) ? readFileSync(agentsPath, "utf-8") : undefined;
 
 const approval = createApproval({ mode: "interactive" });
-const sandbox = createLocalSandbox(cwd);
+const sandboxType = process.env.SANDBOX || "local";
+const sandbox =
+  sandboxType === "just-bash"
+    ? await createJustBashSandbox(cwd)
+    : createLocalSandbox(cwd);
+// const sandbox = createLocalSandbox(cwd);
 console.error(`Sandbox ${sandbox.type} created in ${sandbox.workingDirectory}`);
 
 const tools={
