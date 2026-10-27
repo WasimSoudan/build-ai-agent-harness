@@ -3,11 +3,11 @@ dotenvFlow.config();
 import { ToolLoopAgent, stepCountIs, tool } from "ai";
 import { z } from "zod";
 import { execSync } from "node:child_process";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync,readdirSync, readFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 import { google } from "@ai-sdk/google";
 import { buildSystemPrompt } from "./system";
-
+import { join } from "node:path";
 type ApprovalConfig =
   | { mode: "interactive" }
   | { mode: "background" }
@@ -44,7 +44,8 @@ function createApproval(config: ApprovalConfig) {
   }
 
 const cwd = resolve(process.argv[2] || process.cwd());
-
+const agentsPath = join(cwd, "AGENTS.md");
+const projectContext = existsSync(agentsPath) ? readFileSync(agentsPath, "utf-8") : undefined;
 function createBashTool(operations: BashOperations,needsApproval: (input: { command: string }) => boolean,) {
 
   return tool({
@@ -213,6 +214,7 @@ const instructions = buildSystemPrompt({
     workingDirectory: cwd,
     sandboxType: "local",
     toolNames: Object.keys({ read, grep, bash }),
+    projectContext: projectContext,
   });
 
 const agent = new ToolLoopAgent({
