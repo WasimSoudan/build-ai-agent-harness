@@ -8,6 +8,7 @@ import { google } from "@ai-sdk/google";
 import { buildSystemPrompt } from "./system";
 import { join } from "node:path";
 import type { Sandbox } from "./src/sandbox";
+import { createLocalSandbox } from "./src/sandbox-local";
 import { createBashTool, createGrepTool, createReadTool } from "./src/tools";
 type ApprovalConfig =
   | { mode: "interactive" }
@@ -44,50 +45,26 @@ const cwd = resolve(process.argv[2] || process.cwd());
 const agentsPath = join(cwd, "AGENTS.md");
 const projectContext = existsSync(agentsPath) ? readFileSync(agentsPath, "utf-8") : undefined;
 
-const sandbox: Sandbox = {
-  type: "local",
-  workingDirectory: cwd,
-  async readFile(filePath) {
-    return readFileSync(resolve(cwd, filePath), "utf-8");
-  },
-  async exec(command) {
-    try {
-      const stdout = execSync(command, {
-        cwd,
-        encoding: "utf-8",
-        timeout: 30_000,
-        shell: "powershell.exe",
-      });
-      return { stdout, exitCode: 0 };
-    } catch (error: any) {
-      return {
-        stdout: error.stdout || error.stderr || error.message || "",
-        exitCode: error.status ?? 1,
-      };
-    }
-  },
-  async stop() {},
-};
+const approval = createApproval({ mode: "interactive" });
+const sandbox = createLocalSandbox(cwd);
+console.error(`Sandbox ${sandbox.type} created in ${sandbox.workingDirectory}`);
 
-const approval = createApproval({
-  mode: "delegated",
-  trust: ["pwd", "find .", "git status"],
-});
-const bash = createBashTool(sandbox, approval);
-const read = createReadTool(sandbox);
-const grep = createGrepTool(sandbox);
-
+const tools={
+    bash: createBashTool(sandbox, approval),
+    read: createReadTool(sandbox),
+    grep: createGrepTool(sandbox),
+}
 const instructions = buildSystemPrompt({
     workingDirectory: cwd,
     sandboxType: "local",
-    toolNames: Object.keys({ read, grep, bash }),
+    toolNames: Object.keys(tools),
     projectContext: projectContext,
   });
 
 const agent = new ToolLoopAgent({
   model: google("gemini-3.5-flash-lite"),
   instructions:  instructions,
-  tools: { bash, read, grep },
+  tools: tools,
   stopWhen: stepCountIs(10),
 });
 
