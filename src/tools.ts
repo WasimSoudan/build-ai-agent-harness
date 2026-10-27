@@ -118,24 +118,12 @@ export function createBashTool(
   sandbox: Sandbox,
   needsApproval: (input: { command: string }) => boolean,
 ) {
+  const MAX_BASH_CHARS = 5000;
   return tool({
-    description: `Execute a shell command in the working directory.
-
-WHEN TO USE: running build commands, installing packages, running tests,
-  git operations, directory listings.
-
-WHEN NOT TO USE: reading file contents (use read instead).
-  Searching for patterns (use grep instead).
-
-DO NOT USE FOR: reading files (use read), searching code (use grep).
-
-USAGE: command is a single shell string. Commands not approved by the
-  approval policy are blocked and return a clear error message.
-
-EXAMPLES:
-  - List files: command "ls"
-  - Check git status: command "git status"
-  - Run a test suite: command "npm test"`,
+    description:  `Execute a shell command in the working directory.
+    WHEN TO USE: build commands, package install, tests, git, directory listings.
+    WHEN NOT TO USE: reading file contents (use read).
+    DO NOT USE FOR: reading files (use read), searching code (use grep).`,
     inputSchema: z.object({
       command: z.string().describe("Shell command to execute"),
     }),
@@ -143,8 +131,12 @@ EXAMPLES:
       if (needsApproval({ command })) {
         return `Blocked: "${command}" requires approval.`;
       }
-      const { stdout } = await sandbox.exec(command);
-      return stdout || "(no output)";
+      const result = await sandbox.exec(command);
+      const stdout = result.stdout || "(no output)";
+      return stdout.length > MAX_BASH_CHARS
+        ? stdout.slice(-MAX_BASH_CHARS) +
+            `\n... (truncated, showing last ${MAX_BASH_CHARS} chars)`
+        : stdout;
     },
   });
 }
