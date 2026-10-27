@@ -11,6 +11,7 @@ import type { SandboxLifecycle } from "./src/sandbox";
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
 import { createBashTool, createGrepTool, createReadTool } from "./src/tools";
+import { addCacheControl } from "./src/cache";  
 type ApprovalConfig =
   | { mode: "interactive" }
   | { mode: "background" }
@@ -79,17 +80,22 @@ const agent = new ToolLoopAgent({
   tools: tools,
   stopWhen: stepCountIs(10),
   onStepEnd:({usage ,stepNumber})=>{
-    console.error(`Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output`);
+    console.error(  `Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output, ${usage.cacheUsage?.totalCachedTokens ?? 0} cached`,
+    );
   },
-  prepareCall: async (options) => ({
-    ...options,
-    messages: options.messages
+  prepareCall: async (options) => {
+    const pruned = options.messages
       ? pruneMessages({
           messages: options.messages,
           toolCalls: "before-last-3-messages",
         })
-      : undefined,
-  })
+      : undefined;
+   
+    return {
+      ...options,
+      messages: pruned ? addCacheControl(pruned) : undefined,
+    };
+  },
 });
 
 const prompt = process.argv.slice(3).join(" ") || "Hello!";
