@@ -10,7 +10,7 @@ import { join } from "node:path";
 import type { SandboxLifecycle } from "./src/sandbox";
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
-import { createBashTool, createGrepTool, createReadTool } from "./src/tools";
+import { createBashTool, createGrepTool, createReadTool, createTaskTool } from "./src/tools";
 import { addCacheControl } from "./src/cache";  
 type ApprovalConfig =
   | { mode: "interactive" }
@@ -74,13 +74,19 @@ const instructions = buildSystemPrompt({
     projectContext: projectContext,
   });
 
+  const tools_with_task = {
+    ...tools,
+    task:  createTaskTool(sandbox, { read: tools.read, grep: tools.grep }),
+  }
+
 const agent = new ToolLoopAgent({
   model: google("gemini-3.5-flash-lite"),
   instructions:  instructions,
-  tools: tools,
+  tools: tools_with_task,
   stopWhen: stepCountIs(10),
   onStepEnd:({usage ,stepNumber})=>{
-    console.error(  `Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output, ${usage.cacheUsage?.totalCachedTokens ?? 0} cached`,
+    console.error(
+      `Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output, ${usage.inputTokenDetails.cacheReadTokens ?? 0} cached`,
     );
   },
   prepareCall: async (options) => {
