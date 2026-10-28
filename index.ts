@@ -5,12 +5,12 @@ import { execSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { google } from "@ai-sdk/google";
-import { buildSystemPrompt } from "./system";
+import { buildSystemPrompt } from "./src/system";
 import { join } from "node:path";
 import type { SandboxLifecycle } from "./src/sandbox";
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
-import { createBashTool, createGrepTool, createReadTool, createTaskTool } from "./src/tools";
+import {  createAskUserTool, createBashTool, createGrepTool, createReadTool, createTaskTool } from "./src/tools";
 import { addCacheControl } from "./src/cache";  
 type ApprovalConfig =
   | { mode: "interactive" }
@@ -66,6 +66,7 @@ const tools={
     bash: createBashTool(sandbox, approval),
     read: createReadTool(sandbox),
     grep: createGrepTool(sandbox),
+    askUser: createAskUserTool(),
 }
 const instructions = buildSystemPrompt({
     workingDirectory: cwd,
