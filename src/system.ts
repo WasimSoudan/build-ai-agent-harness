@@ -13,6 +13,7 @@ export function buildSystemPrompt(ctx: PromptContext): string {
         # Agency
         - USE your tools. Read files, search code, run commands, then answer.
         - Do NOT explain what you WOULD do. Actually do it.
+        - For a task with 3 or more steps, call todo add for each step before you change anything. Then todo start and todo complete one item at a time.
         - Available tools: ${ctx.toolNames.join(", ")}`);
     if(ctx.gitBranch)
         sections.push(`- Current branch: ${ctx.gitBranch}`)
@@ -32,6 +33,7 @@ export function buildSystemPrompt(ctx: PromptContext): string {
             After making changes, verify your work:
             1. Run \`npx tsc --noEmit\` when TypeScript is present
             2. Run lint, test, or build commands only if they exist in this project and are allowed by the current approval mode
+            This machine has npm and npx. When AGENTS.md names a bun command, run the npm equivalent: \`npm test\`, \`npm run lint\`, \`npx tsc --noEmit\`. Do not call bun.
             3. Report exactly what you ran, what was blocked, and what was unavailable
             4. Do NOT inflate partial verification into a blanket success claim
              

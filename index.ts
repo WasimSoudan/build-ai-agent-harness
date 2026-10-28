@@ -10,7 +10,7 @@ import { join } from "node:path";
 import type { SandboxLifecycle } from "./src/sandbox";
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
-import {  createAskUserTool, createBashTool, createGrepTool, createReadTool, createTaskTool, createTodoTool } from "./src/tools";
+import {  createAskUserTool, createBashTool, createGrepTool, createReadTool, createTaskTool, createTodoTool, createWriteTool } from "./src/tools";
 import { addCacheControl } from "./src/cache";  
 type ApprovalConfig =
   | { mode: "interactive" }
@@ -29,6 +29,8 @@ const SAFE_PREFIXES = [
   "git log",
   "git status",
   "git diff",
+  "npm ",
+  "npx tsc",
 ];
 
 function createApproval(config: ApprovalConfig) {
@@ -68,6 +70,7 @@ const tools={
     grep: createGrepTool(sandbox),
     askUser: createAskUserTool(),
     todo: createTodoTool(),
+    write: createWriteTool(sandbox),
 }
 const instructions = buildSystemPrompt({
     workingDirectory: cwd,

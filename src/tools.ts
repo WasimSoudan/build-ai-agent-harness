@@ -204,7 +204,8 @@ export function createBashTool(
     description:  `Execute a shell command in the working directory.
     WHEN TO USE: build commands, package install, tests, git, directory listings.
     WHEN NOT TO USE: reading file contents (use read).
-    DO NOT USE FOR: reading files (use read), searching code (use grep).`,
+    DO NOT USE FOR: reading files (use read), searching code (use grep),
+      writing files (use write). Shell heredocs fail in PowerShell.`,
     inputSchema: z.object({
       command: z.string().describe("Shell command to execute"),
     }),
@@ -278,6 +279,28 @@ DO NOT USE FOR: rhetorical questions or progress updates.`,
 }
 
 
+export function createWriteTool(sandbox: Sandbox) {
+  return tool({
+    description: `Write a file in the working directory. Replaces the full file contents.
+WHEN TO USE: creating or updating a file, such as package.json. Read the file first,
+  then write the complete new contents.
+WHEN NOT TO USE: reading a file (use read), searching (use grep), running commands (use bash).
+DO NOT USE FOR: shell redirects or heredocs. Those fail in PowerShell.`,
+    inputSchema: z.object({
+      path: z.string().describe("File path relative to the working directory"),
+      content: z.string().describe("Full new contents of the file"),
+    }),
+    execute: async ({ path: filePath, content }) => {
+      try {
+        await sandbox.writeFile(filePath, content);
+        return `Wrote ${filePath} (${content.length} chars)`;
+      } catch (e: any) {
+        return `Write failed: ${e.message}`;
+      }
+    },
+  });
+}
+
 export function createTodoTool(){
   return tool({
     description: `Manage a task list for multi-step work.
@@ -291,6 +314,11 @@ export function createTodoTool(){
       id: z.string().optional()
     }),
     execute: async ({ action, description, id }) => {
+      const reply = (message: string) => {
+        console.log(message);
+        return message;
+      };
+
       if (action === "add") {
         const item: TodoItem = {
           id: crypto.randomUUID().slice(0, 8),
@@ -298,34 +326,34 @@ export function createTodoTool(){
           state: "pending",
         };
         todos.push(item);
-        return `Added: [${item.id}] ${item.description}`;
+        return reply(`Added: [${item.id}] ${item.description}`);
       }
  
       if (action === "start") {
         const active = todos.find((t) => t.state === "in_progress");
         if (active) {
-          return `Already working on: [${active.id}] ${active.description}. Complete it first.`;
+          return reply(`Already working on: [${active.id}] ${active.description}. Complete it first.`);
         }
         const next = todos.find((t) => t.id === id);
         if (next) {
           next.state = "in_progress";
-          return `Started: [${next.id}] ${next.description}`;
+          return reply(`Started: [${next.id}] ${next.description}`);
         }
-        return `No todo with id ${id}.`;
+        return reply(`No todo with id ${id}.`);
       }
  
       if (action === "complete") {
         const item = todos.find((t) => t.id === id);
         if (item) {
           item.state = "completed";
-          return `Completed: [${item.id}] ${item.description}`;
+          return reply(`Completed: [${item.id}] ${item.description}`);
         }
-        return `No todo with id ${id}.`;
+        return reply(`No todo with id ${id}.`);
       }
  
-      return todos
+      return reply(todos
         .map((t) => `[${t.state}] ${t.id}: ${t.description}`)
-        .join("\n") || "No todos.";
+        .join("\n") || "No todos.");
     }, 
   });
 }

@@ -2,6 +2,7 @@ export interface Sandbox {
     type: string;
     workingDirectory: string;
     readFile(path: string): Promise<string>;
+    writeFile(path: string, content: string): Promise<void>;
     exec(command: string): Promise<{ stdout: string; exitCode: number }>;
     stop(): Promise<void>;
     expiresAt?: number;

@@ -12,6 +12,13 @@ export async function createJustBashSandbox(dir:string):Promise<Sandbox>{
             const virtualPath = `${MOUNT}/${p}`;
             return jb.readFile(virtualPath);
           },
+          writeFile: async (p, content) => {
+            if (p.split(/[/\\]/).includes("..")) {
+              throw new Error(`Cannot write outside the project: ${p}`);
+            }
+            const virtualPath = `${MOUNT}/${p.replace(/\\/g, "/")}`;
+            await jb.writeFiles({ [virtualPath]: content });
+          },
           exec: async (command) => {
             const cmd = await jb.runCommand(command, { cwd: MOUNT });
             const finished = await cmd.wait();
