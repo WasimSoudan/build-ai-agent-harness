@@ -97,9 +97,30 @@ process.on("SIGINT", async () => {
 });
  
 try {
-  const { text, steps } = await agent.generate({ prompt });
-  console.log(text);
-  console.log(`\n(${steps.length} steps)`);
+  const result = await agent.stream({ prompt });
+
+  for await (const chunk of result.fullStream) {
+    switch (chunk.type) {
+      case "text-delta":
+        process.stdout.write(chunk.text);
+        break;
+      case "tool-call":
+        console.error(
+          `\n[tool] ${chunk.toolName}(${JSON.stringify(chunk.input)})`,
+        );
+        break;
+      case "tool-result": {
+        const raw =
+          typeof chunk.output === "string"
+            ? chunk.output
+            : JSON.stringify(chunk.output) ?? "";
+        console.error(`  -> ${raw.slice(0, 100)}`);
+        break;
+      }
+    }
+  }
+
+  console.log();
 } finally {
   await sandbox.stop();
 }
