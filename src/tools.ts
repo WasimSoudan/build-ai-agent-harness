@@ -3,12 +3,7 @@ import { z } from "zod";
 import { basename, relative } from "node:path";
 import type { Sandbox } from "./sandbox";
 import { google } from "@ai-sdk/google";
-
-type ApprovalConfig =
-  | { mode: "interactive" }
-  | { mode: "background" }
-  | { mode: "delegated"; trust: string[] };
-
+import { createApproval } from "./approval";
 interface TodoItem {
   id :string;
   description :string;
@@ -17,31 +12,6 @@ interface TodoItem {
 }
 const todos: TodoItem[] = [];
 
-const SAFE_PREFIXES = [
-  "ls",
-  "cat",
-  "echo",
-  "pwd",
-  "which",
-  "find",
-  "head",
-  "tail",
-  "wc",
-  "git log",
-  "git status",
-  "git diff",
-];
-function createApproval(config: ApprovalConfig) {
-  return ({ command }: { command: string }) => {
-    if (config.mode === "background") return false;
- 
-    if (config.mode === "delegated") {
-      return !config.trust.some((p) => command.trim().startsWith(p));
-    }
- 
-    return !SAFE_PREFIXES.some((p) => command.trim().startsWith(p));
-  };
-}
 function buildExplorer(sandbox:Sandbox ,parentTools:{read:any,grep:any})  {
   return new ToolLoopAgent({
     model: google("gemini-3.5-flash-lite"),

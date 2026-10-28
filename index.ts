@@ -13,38 +13,7 @@ import { createJustBashSandbox } from "./src/sandbox-just-bash";
 import {  createAskUserTool, createBashTool, createGrepTool, createReadTool, createTaskTool, createTodoTool, createWriteTool } from "./src/tools";
 import { addCacheControl } from "./src/cache";  
 import { discoverGates } from "./src/verification";
-type ApprovalConfig =
-  | { mode: "interactive" }
-  | { mode: "background" }
-  | { mode: "delegated"; trust: string[] };
-const SAFE_PREFIXES = [
-  "ls",
-  "cat",
-  "echo",
-  "pwd",
-  "which",
-  "find",
-  "head",
-  "tail",
-  "wc",
-  "git log",
-  "git status",
-  "git diff",
-  "npm ",
-  "npx tsc",
-];
-
-function createApproval(config: ApprovalConfig) {
-    return ({ command }: { command: string }) => {
-      if (config.mode === "background") return false;
-   
-      if (config.mode === "delegated") {
-        return !config.trust.some((p) => command.trim().startsWith(p));
-      }
-   
-      return !SAFE_PREFIXES.some((p) => command.trim().startsWith(p));
-    };
-  }
+import { createApproval } from "./src/approval";
 
 const cwd = resolve(process.argv[2] || process.cwd());
 const agentsPath = join(cwd, "AGENTS.md");
