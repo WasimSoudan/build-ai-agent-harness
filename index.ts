@@ -12,6 +12,7 @@ import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
 import {  createAskUserTool, createBashTool, createGrepTool, createReadTool, createTaskTool, createTodoTool, createWriteTool } from "./src/tools";
 import { addCacheControl } from "./src/cache";  
+import { discoverGates } from "./src/verification";
 type ApprovalConfig =
   | { mode: "interactive" }
   | { mode: "background" }
@@ -72,11 +73,13 @@ const tools={
     todo: createTodoTool(),
     write: createWriteTool(sandbox),
 }
+const verificationCommands = await discoverGates(sandbox);
 const instructions = buildSystemPrompt({
     workingDirectory: cwd,
     sandboxType: "local",
     toolNames: Object.keys(tools),
     projectContext: projectContext,
+    verificationCommands: verificationCommands,
   });
 
   const tools_with_task = {
