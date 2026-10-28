@@ -13,8 +13,10 @@ export function buildSystemPrompt(ctx: PromptContext): string {
         # Agency
         - USE your tools. Read files, search code, run commands, then answer.
         - Do NOT explain what you WOULD do. Actually do it.
-        - For a task with 3 or more steps, call todo add for each step before you change anything. Then todo start and todo complete one item at a time.
-        - Available tools: ${ctx.toolNames.join(", ")}`);
+        - Available tools: ${ctx.toolNames.join(", ")}
+        - Search before reading. Use grep first, then read only what you'll change.
+        - Don't read files "just in case." Read what you need when you need it.`);
+
     if(ctx.gitBranch)
         sections.push(`- Current branch: ${ctx.gitBranch}`)
     sections.push(`
