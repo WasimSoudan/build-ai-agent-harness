@@ -1,71 +1,76 @@
 import dotenvFlow from "dotenv-flow";
 dotenvFlow.config();
-import { ToolLoopAgent, stepCountIs,tool, pruneMessages } from "ai";
-import { execSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { parseArgs } from "node:util";
+import { ToolLoopAgent, isStepCount, pruneMessages } from "ai";
 import { resolve } from "node:path";
-import { google } from "@ai-sdk/google";
-import { buildSystemPrompt } from "./src/system";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { SandboxLifecycle } from "./src/sandbox";
+ 
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
-import {  createAskUserTool, createBashTool, createGrepTool, createReadTool, createTaskTool, createTodoTool, createWriteTool } from "./src/tools";
-import { addCacheControl } from "./src/cache";  
-import { discoverGates } from "./src/verification";
+import { buildSystemPrompt } from "./src/system";
+import {
+  createReadTool,
+  createGrepTool,
+  createBashTool,
+  createTaskTool,
+  createAskUserTool,
+  createTodoTool,
+} from "./src/tools";
 import { createApproval } from "./src/approval";
-
-const cwd = resolve(process.argv[2] || process.cwd());
-const agentsPath = join(cwd, "AGENTS.md");
-const projectContext = existsSync(agentsPath) ? readFileSync(agentsPath, "utf-8") : undefined;
-
-const approval = createApproval({ mode: "interactive" });
-const sandboxType = process.env.SANDBOX || "local";
-const sandbox =
-  sandboxType === "just-bash"
-    ? await createJustBashSandbox(cwd)
-    : createLocalSandbox(cwd);
-// const sandbox = createLocalSandbox(cwd);
-console.error(`Sandbox ${sandbox.type} created in ${sandbox.workingDirectory}`);
-
-const lifecycle: SandboxLifecycle = {
-  afterStart: async (sb) => console.error(`[lifecycle] after start: ${sb.type}`),
-  beforeStop: async (sb) => console.error(`[lifecycle] before stop: ${sb.type}`),
-};
-await lifecycle.afterStart?.(sandbox);
-
-const tools={
-    bash: createBashTool(sandbox, approval),
-    read: createReadTool(sandbox),
-    grep: createGrepTool(sandbox),
-    askUser: createAskUserTool(),
-    todo: createTodoTool(),
-    write: createWriteTool(sandbox),
-}
-const verificationCommands = await discoverGates(sandbox);
-const instructions = buildSystemPrompt({
-    workingDirectory: cwd,
-    sandboxType: "local",
-    toolNames: Object.keys(tools),
-    projectContext: projectContext,
-    verificationCommands: verificationCommands,
-  });
-
-  const tools_with_task = {
-    ...tools,
-    task:  createTaskTool(sandbox, { read: tools.read, grep: tools.grep }),
-  }
-
-const agent = new ToolLoopAgent({
-  model: google("gemini-3.5-flash-lite"),
-  instructions:  instructions,
-  tools: tools_with_task,
-  stopWhen: stepCountIs(20),
-  onStepEnd:({usage ,stepNumber})=>{
-    console.error(
-      `Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output, ${usage.inputTokenDetails.cacheReadTokens ?? 0} cached`,
-    );
+import { addCacheControl } from "./src/cache";
+import { discoverGates } from "./src/verification";
+import type { Sandbox } from "./src/sandbox";
+ import { google } from "@ai-sdk/google";
+const { values, positionals } = parseArgs({
+  args: process.argv.slice(2),
+  options: {
+    sandbox: { type: "string", default: "local" },
+    model: { type: "string", default: "gemini-3.5-flash-lite" },
   },
+  allowPositionals: true,
+});
+ 
+const cwd = resolve(positionals[0] || process.cwd());
+const prompt = positionals.slice(1).join(" ") || "Hello!";
+ 
+async function sandboxFromFlag(name: string, dir: string): Promise<Sandbox> {
+  if (name === "just-bash") return createJustBashSandbox(dir);
+  return createLocalSandbox(dir);
+}
+ 
+const sandbox = await sandboxFromFlag(values.sandbox!, cwd);
+console.error(`Sandbox: ${sandbox.type}`);
+ 
+const projectContext = existsSync(join(cwd, "AGENTS.md"))
+  ? readFileSync(join(cwd, "AGENTS.md"), "utf-8")
+  : undefined;
+ 
+const verificationCommands = await discoverGates(sandbox);
+ 
+const baseTools = {
+  read: createReadTool(sandbox),
+  grep: createGrepTool(sandbox),
+  bash: createBashTool(sandbox, createApproval({ mode: "interactive" })),
+};
+const tools = {
+  ...baseTools,
+  task: createTaskTool(sandbox, { read: baseTools.read, grep: baseTools.grep }),
+  askUser: createAskUserTool(),
+  todo: createTodoTool(),
+};
+ 
+const agent = new ToolLoopAgent({
+  model: google(values.model!),
+  instructions: buildSystemPrompt({
+    workingDirectory: cwd,
+    sandboxType: sandbox.type,
+    toolNames: Object.keys(tools),
+    projectContext,
+    verificationCommands,
+  }),
+  tools,
+  stopWhen: isStepCount(15),
   prepareCall: async (options) => {
     const pruned = options.messages
       ? pruneMessages({
@@ -73,20 +78,28 @@ const agent = new ToolLoopAgent({
           toolCalls: "before-last-3-messages",
         })
       : undefined;
-   
     return {
       ...options,
       messages: pruned ? addCacheControl(pruned) : undefined,
     };
   },
+  onStepEnd: ({ usage, stepNumber }) => {
+    console.error(
+      `Step ${stepNumber}: ${usage.inputTokens} input, ${usage.outputTokens} output`,
+    );
+  },
 });
-
-const prompt = process.argv.slice(3).join(" ") || "Hello!";
+ 
+process.on("SIGINT", async () => {
+  console.error("\nShutting down...");
+  await sandbox.stop();
+  process.exit(0);
+});
+ 
 try {
   const { text, steps } = await agent.generate({ prompt });
   console.log(text);
   console.log(`\n(${steps.length} steps)`);
 } finally {
-  await lifecycle.beforeStop?.(sandbox);
   await sandbox.stop();
 }
