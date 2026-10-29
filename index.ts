@@ -1,29 +1,21 @@
 import dotenvFlow from "dotenv-flow";
 dotenvFlow.config();
 import { parseArgs } from "node:util";
-import { ToolLoopAgent, isStepCount, pruneMessages } from "ai";
+import { ToolLoopAgent, isStepCount, pruneMessages, tool } from "ai";
+import { z } from "zod";
 import { resolve } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
- 
+
 import { createLocalSandbox } from "./src/sandbox-local";
 import { createJustBashSandbox } from "./src/sandbox-just-bash";
 import { buildSystemPrompt } from "./src/system";
-import {
-  createReadTool,
-  createGrepTool,
-  createBashTool,
-  createTaskTool,
-  createAskUserTool,
-  createTodoTool,
-} from "./src/tools";
-import { createApproval } from "./src/approval";
 import { addCacheControl } from "./src/cache";
 import { discoverGates } from "./src/verification";
 import type { Sandbox } from "./src/sandbox";
- import { google } from "@ai-sdk/google";
- import { discoverSkills } from "./src/skills";
- import { createLoadSkillTool } from "./src/tools";
+import { google } from "@ai-sdk/google";
+import { discoverSkills } from "./src/skills";
+import { createRegistry, registerBuiltins } from "./src/registry";
 const { values, positionals } = parseArgs({
   args: process.argv.slice(2),
   options: {
@@ -55,25 +47,23 @@ const skillDirs = [
 ];
 const skills = discoverSkills(skillDirs);
  
-const baseTools = {
-  read: createReadTool(sandbox),
-  grep: createGrepTool(sandbox),
-  bash: createBashTool(sandbox, createApproval({ mode: "interactive" })),
-};
-const tools = {
-  ...baseTools,
-  task: createTaskTool(sandbox, { read: baseTools.read, grep: baseTools.grep }),
-  askUser: createAskUserTool(),
-  todo: createTodoTool(),
-  loadSkill: createLoadSkillTool(skills),
-};
- 
+const registry = createRegistry();
+registerBuiltins(registry, sandbox, skills);
+
+registry.register("now", tool({
+  description: "Return the current timestamp",
+  inputSchema: z.object({}),
+  execute: async () => new Date().toISOString(),
+}));
+
+const tools = Object.fromEntries(registry.entries());
+
 const agent = new ToolLoopAgent({
   model: google(values.model!),
   instructions: buildSystemPrompt({
     workingDirectory: cwd,
     sandboxType: sandbox.type,
-    toolNames: Object.keys(tools),
+    toolNames: registry.list(),
     projectContext,
     verificationCommands,
     skills: skills.map((s) => ({ name: s.name, description: s.description })),
