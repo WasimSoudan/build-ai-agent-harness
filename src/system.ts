@@ -6,7 +6,10 @@ export interface PromptContext {
   projectContext?: string;
   verificationCommands?: string[];
 }
-
+export interface PromptContext {
+  // ...existing fields
+  skills?: { name: string; description: string }[];
+}
 export function buildSystemPrompt(ctx: PromptContext): string {
   const sections: string[] = [];
   sections.push(`You are a coding agent working in: ${ctx.workingDirectory}`);
@@ -65,5 +68,17 @@ When the task is ambiguous or has multiple valid approaches:
 Specific tasks (with file paths, line numbers, or precise instructions) do not
 need askUser. Act directly.`);
 
+
+ 
+// Inside buildSystemPrompt, after Guardrails:
+if (ctx.skills?.length) {
+  const lines = ctx.skills
+    .map((s) => `- ${s.name}: ${s.description}`)
+    .join("\n");
+  sections.push(`
+# Skills
+The following skills are available. Call \`loadSkill\` with the name to get full content.
+${lines}`);
+}
   return sections.join("\n");
 }

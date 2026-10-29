@@ -22,6 +22,8 @@ import { addCacheControl } from "./src/cache";
 import { discoverGates } from "./src/verification";
 import type { Sandbox } from "./src/sandbox";
  import { google } from "@ai-sdk/google";
+ import { discoverSkills } from "./src/skills";
+ import { createLoadSkillTool } from "./src/tools";
 const { values, positionals } = parseArgs({
   args: process.argv.slice(2),
   options: {
@@ -47,6 +49,11 @@ const projectContext = existsSync(join(cwd, "AGENTS.md"))
   : undefined;
  
 const verificationCommands = await discoverGates(sandbox);
+const skillDirs = [
+  join(cwd, "skills"),
+  join(process.env.HOME ?? "", ".harness", "skills"),
+];
+const skills = discoverSkills(skillDirs);
  
 const baseTools = {
   read: createReadTool(sandbox),
@@ -58,6 +65,7 @@ const tools = {
   task: createTaskTool(sandbox, { read: baseTools.read, grep: baseTools.grep }),
   askUser: createAskUserTool(),
   todo: createTodoTool(),
+  loadSkill: createLoadSkillTool(skills),
 };
  
 const agent = new ToolLoopAgent({
@@ -68,6 +76,7 @@ const agent = new ToolLoopAgent({
     toolNames: Object.keys(tools),
     projectContext,
     verificationCommands,
+    skills: skills.map((s) => ({ name: s.name, description: s.description })),
   }),
   tools,
   stopWhen: isStepCount(15),
