@@ -1,0 +1,1609 @@
+{
+ "url": "index.html",
+ "at": "2026-10-29T06:06:55.489Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.6,
+    0.81,
+    0.76,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 29,
+    "css": 10,
+    "transitions": 19,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4491,
+     "screens": 5,
+     "words": 260,
+     "img": 8,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 8,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "still-life-of-a-clementine-and-peeled.jpg",
+      "still-life-with-a-peeled-lemon-in.jpg",
+      "dutch-stilleven-met-pastei-geschilde-citroen-bro",
+      "a-peeled-lemon-with-plums-grapes-and.jpg",
+      "still-life-with-a-peeled-lemon-in.jpg",
+      "dutch-stilleven-met-pastei-geschilde-citroen-bro",
+      "still-life-of-a-clementine-and-peeled.jpg",
+      "still-life-with-lemon-pipe-and-bread.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "About Me",
+     "words": 2,
+     "chars": 8,
+     "lines": 2,
+     "size": 64,
+     "vw": 4.4,
+     "font": "Besley",
+     "weight": 800,
+     "tracking": -0.02,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "left",
+     "widthRatio": 0.15,
+     "top": 243,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "About Me",
+     "words": 2,
+     "lines": 2,
+     "size": 64,
+     "font": "Besley"
+    },
+    "headings": [
+     {
+      "text": "About Me",
+      "words": 2,
+      "chars": 8,
+      "lines": 2,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.15,
+      "top": 243,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "One page",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 1012,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "First pages",
+      "words": 2,
+      "chars": 11,
+      "lines": 2,
+      "size": 115.2,
+      "vw": 8,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 1803,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "begin@ maravoss.example",
+      "words": 2,
+      "chars": 23,
+      "lines": 2,
+      "size": 118.1,
+      "vw": 8.2,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 3103,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Mara Voss",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 129.6,
+      "vw": 9,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 0.84,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 4195,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 1,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Libre Franklin",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Besley",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      17,
+      21,
+      26,
+      64,
+      115,
+      118,
+      130
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Libre Franklin",
+      "size": 21,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 10.5
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 129.6,
+      "vw": 9,
+      "font": "Besley",
+      "text": "Mara Voss"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.08,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4e20a",
+     "bodyBgHsl": {
+      "h": 55,
+      "s": 0.92,
+      "l": 0.5
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4e20a",
+       "top": 20,
+       "hsl": {
+        "h": 55,
+        "s": 0.92,
+        "l": 0.5
+       }
+      },
+      {
+       "color": "#ddc807",
+       "top": 952,
+       "hsl": {
+        "h": 54,
+        "s": 0.94,
+        "l": 0.45
+       }
+      },
+      {
+       "color": "#16180c",
+       "top": 20,
+       "hsl": {
+        "h": 70,
+        "s": 0.33,
+        "l": 0.07
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#16180c",
+       "share": 0.49
+      },
+      {
+       "color": "#f4e20a",
+       "share": 0.41
+      },
+      {
+       "color": "#3c4218",
+       "share": 0.1
+      }
+     ],
+     "button": {
+      "bg": "#16382a",
+      "hsl": {
+       "h": 155,
+       "s": 0.44,
+       "l": 0.15
+      },
+      "fg": "#f4e20a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 1,
+     "radius": 0,
+     "height": 56,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Begin a page"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 8,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.51
+     },
+     {
+      "type": "img",
+      "ratio": 0.51
+     },
+     {
+      "type": "img",
+      "ratio": 0.5
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 860,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "besley",
+     "libre franklin"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 4491,
+    "margins": {
+     "left": 20,
+     "right": 4
+    },
+    "sections": [
+     {
+      "sel": "div.stage",
+      "tag": "div",
+      "top": 0,
+      "height": 1743,
+      "words": 115,
+      "media": 1,
+      "middle": 76,
+      "heading": {
+       "text": "About",
+       "size": 64,
+       "tag": "h1"
+      },
+      "left": 96,
+      "right": 4,
+      "textLeft": 96,
+      "textRight": 806,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "section#openings.work",
+      "tag": "section",
+      "top": 1763,
+      "height": 900,
+      "words": 56,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "pages",
+       "size": 115,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 925,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#write.write",
+      "tag": "section",
+      "top": 2683,
+      "height": 900,
+      "words": 18,
+      "media": 0,
+      "middle": 29,
+      "heading": {
+       "text": "begin@",
+       "size": 118,
+       "tag": "a"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 3591,
+      "height": 900,
+      "words": 74,
+      "media": 1,
+      "middle": 442,
+      "heading": null,
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": true,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "About Me",
+      "size": 64,
+      "top": 243,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 96,
+      "n": 5
+     },
+     {
+      "x": 20,
+      "n": 3
+     },
+     {
+      "x": 32,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 21,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 120,
+     "h": 780
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.57,
+    0.85,
+    0.68,
+    0.96,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 29,
+    "css": 10,
+    "transitions": 19,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 5290,
+     "screens": 5.2,
+     "words": 260,
+     "img": 8,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 8,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "still-life-of-a-clementine-and-peeled.jpg",
+      "still-life-with-a-peeled-lemon-in.jpg",
+      "dutch-stilleven-met-pastei-geschilde-citroen-bro",
+      "a-peeled-lemon-with-plums-grapes-and.jpg",
+      "still-life-with-a-peeled-lemon-in.jpg",
+      "dutch-stilleven-met-pastei-geschilde-citroen-bro",
+      "still-life-of-a-clementine-and-peeled.jpg",
+      "still-life-with-lemon-pipe-and-bread.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "About Me",
+     "words": 2,
+     "chars": 8,
+     "lines": 2,
+     "size": 45.4,
+     "vw": 5.9,
+     "font": "Besley",
+     "weight": 800,
+     "tracking": -0.02,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "left",
+     "widthRatio": 0.2,
+     "top": 317,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "About Me",
+     "words": 2,
+     "lines": 2,
+     "size": 45.4,
+     "font": "Besley"
+    },
+    "headings": [
+     {
+      "text": "About Me",
+      "words": 2,
+      "chars": 8,
+      "lines": 2,
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.2,
+      "top": 317,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "One page",
+      "words": 2,
+      "chars": 8,
+      "lines": 2,
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 1136,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "First pages",
+      "words": 2,
+      "chars": 11,
+      "lines": 2,
+      "size": 61.4,
+      "vw": 8,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 2230,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "begin@ maravoss.example",
+      "words": 2,
+      "chars": 23,
+      "lines": 2,
+      "size": 63,
+      "vw": 8.2,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3794,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Mara Voss",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 69.1,
+      "vw": 9,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 0.84,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5050,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 1,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Libre Franklin",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Besley",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      13,
+      17,
+      19,
+      23,
+      45,
+      61,
+      63,
+      69
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Libre Franklin",
+      "size": 19.1,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 10.5
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 69.1,
+      "vw": 9,
+      "font": "Besley",
+      "text": "Mara Voss"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.08,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4e20a",
+     "bodyBgHsl": {
+      "h": 55,
+      "s": 0.92,
+      "l": 0.5
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4e20a",
+       "top": 20,
+       "hsl": {
+        "h": 55,
+        "s": 0.92,
+        "l": 0.5
+       }
+      },
+      {
+       "color": "#ddc807",
+       "top": 1076,
+       "hsl": {
+        "h": 54,
+        "s": 0.94,
+        "l": 0.45
+       }
+      },
+      {
+       "color": "#16180c",
+       "top": 20,
+       "hsl": {
+        "h": 70,
+        "s": 0.33,
+        "l": 0.07
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#16180c",
+       "share": 0.49
+      },
+      {
+       "color": "#f4e20a",
+       "share": 0.41
+      },
+      {
+       "color": "#3c4218",
+       "share": 0.1
+      }
+     ],
+     "button": {
+      "bg": "#16382a",
+      "hsl": {
+       "h": 155,
+       "s": 0.44,
+       "l": 0.15
+      },
+      "fg": "#f4e20a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 53,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Begin a page"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 8,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.49
+     },
+     {
+      "type": "img",
+      "ratio": 0.49
+     },
+     {
+      "type": "img",
+      "ratio": 0.49
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 984,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "besley",
+     "libre franklin"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 5290,
+    "margins": {
+     "left": 20,
+     "right": 11
+    },
+    "sections": [
+     {
+      "sel": "div.stage",
+      "tag": "div",
+      "top": 0,
+      "height": 2170,
+      "words": 115,
+      "media": 0,
+      "middle": 16,
+      "heading": {
+       "text": "About",
+       "size": 45,
+       "tag": "h1"
+      },
+      "left": 48,
+      "right": 356,
+      "textLeft": 48,
+      "textRight": 356,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "section#openings.work",
+      "tag": "section",
+      "top": 2190,
+      "height": 1024,
+      "words": 47,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "First",
+       "size": 61,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 488,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#write.write",
+      "tag": "section",
+      "top": 3234,
+      "height": 1024,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Send what will not start",
+       "size": 23,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 4266,
+      "height": 1024,
+      "words": 74,
+      "media": 1,
+      "middle": 85,
+      "heading": null,
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": true,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "About Me",
+      "size": 45,
+      "top": 317,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 96,
+      "n": 5
+     },
+     {
+      "x": 20,
+      "n": 3
+     },
+     {
+      "x": 32,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.54,
+    0.73,
+    0.73,
+    0.9,
+    1
+   ],
+   "motion": {
+    "elements": 29,
+    "css": 10,
+    "transitions": 19,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 4104,
+     "screens": 4.9,
+     "words": 260,
+     "img": 8,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 8,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "still-life-of-a-clementine-and-peeled.jpg",
+      "still-life-with-a-peeled-lemon-in.jpg",
+      "dutch-stilleven-met-pastei-geschilde-citroen-bro",
+      "a-peeled-lemon-with-plums-grapes-and.jpg",
+      "still-life-with-a-peeled-lemon-in.jpg",
+      "dutch-stilleven-met-pastei-geschilde-citroen-bro",
+      "still-life-of-a-clementine-and-peeled.jpg",
+      "still-life-with-lemon-pipe-and-bread.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "About Me",
+     "words": 2,
+     "chars": 8,
+     "lines": 2,
+     "size": 33.3,
+     "vw": 8.5,
+     "font": "Besley",
+     "weight": 800,
+     "tracking": -0.02,
+     "leading": 0.95,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.28,
+     "top": 338,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "About Me",
+     "words": 2,
+     "lines": 2,
+     "size": 33.3,
+     "font": "Besley"
+    },
+    "headings": [
+     {
+      "text": "About Me",
+      "words": 2,
+      "chars": 8,
+      "lines": 2,
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.28,
+      "top": 338,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "One page",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 871,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "First pages",
+      "words": 2,
+      "chars": 11,
+      "lines": 2,
+      "size": 44,
+      "vw": 11.3,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.02,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 1671,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "begin@ maravoss.example",
+      "words": 2,
+      "chars": 23,
+      "lines": 2,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3101,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Mara Voss",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 44,
+      "vw": 11.3,
+      "font": "Besley",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 0.84,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3870,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 1,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Libre Franklin",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Besley",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      13,
+      17,
+      18,
+      20,
+      32,
+      33,
+      44
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Libre Franklin",
+      "size": 18,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 10.5
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 44,
+      "vw": 11.3,
+      "font": "Besley",
+      "text": "Firstpages"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.08,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4e20a",
+     "bodyBgHsl": {
+      "h": 55,
+      "s": 0.92,
+      "l": 0.5
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4e20a",
+       "top": 244,
+       "hsl": {
+        "h": 55,
+        "s": 0.92,
+        "l": 0.5
+       }
+      },
+      {
+       "color": "#ddc807",
+       "top": 847,
+       "hsl": {
+        "h": 54,
+        "s": 0.94,
+        "l": 0.45
+       }
+      },
+      {
+       "color": "#16180c",
+       "top": 1752,
+       "hsl": {
+        "h": 70,
+        "s": 0.33,
+        "l": 0.07
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#16180c",
+       "share": 0.49
+      },
+      {
+       "color": "#f4e20a",
+       "share": 0.41
+      },
+      {
+       "color": "#3c4218",
+       "share": 0.1
+      }
+     ],
+     "button": {
+      "bg": "#16382a",
+      "hsl": {
+       "h": 155,
+       "s": 0.44,
+       "l": 0.15
+      },
+      "fg": "#f4e20a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 1,
+     "radius": 0,
+     "height": 52,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Begin a page"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 8,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.28
+     },
+     {
+      "type": "img",
+      "ratio": 0.28
+     },
+     {
+      "type": "img",
+      "ratio": 0.27
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 562,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "besley",
+     "libre franklin"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 4104,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "div.stage-copy",
+      "tag": "div",
+      "top": 268,
+      "height": 1323,
+      "words": 115,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "About",
+       "size": 33,
+       "tag": "h1"
+      },
+      "left": 40,
+      "right": 44,
+      "textLeft": 40,
+      "textRight": 44,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.stage-still",
+      "tag": "div",
+      "top": 20,
+      "height": 236,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#openings.work",
+      "tag": "section",
+      "top": 1631,
+      "height": 977,
+      "words": 48,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "First",
+       "size": 44,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#write.write",
+      "tag": "section",
+      "top": 2628,
+      "height": 726,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "begin@",
+       "size": 32,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 58,
+      "textLeft": 20,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.foot",
+      "tag": "footer",
+      "top": 3362,
+      "height": 743,
+      "words": 74,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 21,
+      "textLeft": 20,
+      "textRight": 21,
+      "fullBleed": true,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "About Me",
+      "size": 33,
+      "top": 338,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 40,
+      "n": 5
+     },
+     {
+      "x": 20,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 20px on the left, 4px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\desktop-page-01.jpg",
+    "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\User\\Desktop\\build-ai-agent-harness\\.taste-skill\\inspect\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
